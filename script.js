@@ -7,7 +7,7 @@ let boardHeight = 500; // longueur en px
 let player;
 let playerWidth = 80;
 let playerHeight = 8;
-let playerVelocityX = 10;
+let playerVelocityX = 11;
 
 let playerState = {
     x: boardWidth / 2 - playerWidth / 2,
@@ -51,10 +51,15 @@ window.onload = function() {
     status = document.getElementById("status");
     lifeDisplay = document.getElementById("lifeDisplay");
     xpDisplay = document.getElementById("xpDisplay");
+    //continuee = document.getElementById("continuee")
+    //restarte = document.getElementById("restarte")
+
 
     // Positionner initialement
     updatePlayerPosition();
     updateBallPosition();
+
+    document.addEventListener("keydown", stopEsc)
 
     // Fonction pour l'animation du joueur
     requestAnimationFrame(update);
@@ -68,6 +73,7 @@ function update() {
     updatePlayerPosition();
     updateBallPosition();
     moveBall();
+
 
     requestAnimationFrame(update);
 }
@@ -144,7 +150,7 @@ function moveBall() {
 
 
 function xpGenerator() {
-    xp += 100;
+    xp += 500;
     xpDisplay.innerText = "XP: " + xp;
 }
 
@@ -235,4 +241,17 @@ function checkCollisionWithBlocks() {
         }
     }
 }
+
+//---------------------------------------------------------------------------------------------------------------//
+
+
+function stopEsc(event2) {
+    if ( event2.key === "Escape" ) {
+        startMove = false;
+    }
+    
+
+}
+
+
 
