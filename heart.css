@@ -1,0 +1,9 @@
+.block {
+    position: absolute;
+    width: 60px; /* Adjusted for 6 blocks per row in 500px width */
+    height: 20px;
+    background-color: skyblue;
+    border: 1px solid white;
+    border-radius: 3px;
+}
+
