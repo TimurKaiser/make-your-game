@@ -36,6 +36,23 @@
 }
 
 
+#fpsDisplay {
+    margin-left: 89.8%;
+    margin-top: 45%;
+    z-index: 78768789798;
+    position: absolute;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    text-align: center;
+    width: 60px; /* Largeur du cadre FPS */
+    height: 30px; /* Hauteur du cadre FPS */
+    line-height: 30px; /* Centrer le texte verticalement */
+    background-color: #07beb8; /* Même couleur de fond que les boutons */
+    border: 2px solid #4a4a4a; /* Même couleur de bordure que les boutons */
+    border-radius: 5px; /* Même arrondi que les boutons */
+}
+
 .button {
     width: 60px; /* Largeur des boutons */
     height: 30px; /* Hauteur des boutons */

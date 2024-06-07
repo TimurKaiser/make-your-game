@@ -44,6 +44,23 @@ let xpDisplay;
 
 
 
+let blocks = [];
+let numBlocksX = 6; // Nombre de blocs en largeur
+let numBlocksY = 5; // Nombre de blocs en hauteur
+
+let blockWidth = 70; // Largeur d'un bloc
+let blockHeight = 20; // Hauteur d'un bloc
+
+let startX = 20; // Position x de départ du premier bloc
+let startY = 20; // Position y de départ du premier bloc
+
+
+
+let lastTime = 0;
+let frameCount = 0;
+let fps = 0;
+
+
 window.onload = function() {
     board = document.getElementById("board");
     player = document.getElementById("player");
@@ -53,6 +70,7 @@ window.onload = function() {
     xpDisplay = document.getElementById("xpDisplay");
     continuee = document.getElementById("continuee").addEventListener("click", continueGame);
     restarte = document.getElementById("restarte").addEventListener("click", restartGame);
+    fpsDisplay = document.getElementById("fpsDisplay");
 
 
     // Positionner initialement
@@ -68,11 +86,13 @@ window.onload = function() {
     createBlocks();
 }
 
-function update() {
+function update(timestamp) {
     // Met à jour position balle et joueur
     updatePlayerPosition();
     updateBallPosition();
     moveBall();
+
+    calculateFPS(timestamp);
 
 
     requestAnimationFrame(update);
@@ -188,17 +208,6 @@ function restart() {
 
 //-------------------------------------------------------------------------------------------------------------------------------//
 
-let blocks = [];
-let numBlocksX = 6; // Nombre de blocs en largeur
-let numBlocksY = 5; // Nombre de blocs en hauteur
-
-let blockWidth = 70; // Largeur d'un bloc
-let blockHeight = 20; // Hauteur d'un bloc
-
-let startX = 20; // Position x de départ du premier bloc
-let startY = 20; // Position y de départ du premier bloc
-
-
 function createBlocks() {
     // Boucle pour créer les blocs
     for (let i = 0; i < numBlocksY; i++) {
@@ -255,3 +264,20 @@ function continueGame() {
     startMove = true;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------//
+
+function calculateFPS(timestamp) {
+    if (lastTime) {
+        frameCount++; // Incrémente le compteur de frames
+        let deltaTime = (timestamp - lastTime) / 1000; // Temps écoulé en secondes depuis la dernière mesure
+
+        if (deltaTime >= 1) { // Si une seconde ou plus s'est écoulée
+            fps = Math.min(60, Math.round(frameCount / deltaTime)); // Calcule les FPS, limite à 60
+            frameCount = 0; // Réinitialise le compteur de frames
+            lastTime = timestamp; // Met à jour le dernier temps de mesure
+            document.getElementById("fpsDisplay").innerText = fps + " FPS"; // Affiche les FPS
+        }
+    } else {
+        lastTime = timestamp; // Initialise lastTime la première fois que la fonction est appelée
+    }
+}
