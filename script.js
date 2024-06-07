@@ -51,8 +51,8 @@ window.onload = function() {
     status = document.getElementById("status");
     lifeDisplay = document.getElementById("lifeDisplay");
     xpDisplay = document.getElementById("xpDisplay");
-    //continuee = document.getElementById("continuee")
-    //restarte = document.getElementById("restarte")
+    continuee = document.getElementById("continuee").addEventListener("click", continueGame);
+    restarte = document.getElementById("restarte").addEventListener("click", restartGame);
 
 
     // Positionner initialement
@@ -249,9 +249,9 @@ function stopEsc(event2) {
     if ( event2.key === "Escape" ) {
         startMove = false;
     }
-    
-
 }
 
-
+function continueGame() {
+    startMove = true;
+}
 
