@@ -71,6 +71,9 @@ window.onload = function() {
     continuee = document.getElementById("continuee").addEventListener("click", continueGame);
     restarte = document.getElementById("restarte").addEventListener("click", restartGame);
     fpsDisplay = document.getElementById("fpsDisplay");
+    color1 = document.getElementById("color1")
+    color3 = document.getElementById("color3")
+
 
 
     // Positionner initialement
@@ -108,16 +111,16 @@ function updateBallPosition() {
     ball.style.top = ballState.y + "px";
 }
 
+
 function movePlayer(event) {
-    // Identifie fleche de gauche et droite  
     if (event.key === "ArrowLeft") {
-        // math.max(0,...) détermine la bordure
         playerState.x = Math.max(0, playerState.x - playerVelocityX);
         startMove = true;
+        changeButtonColor(color1, "red", "left");
     } else if (event.key === "ArrowRight") {
-        // Math min determine la bordure ( longeurBoard - longueurJoueur)
         playerState.x = Math.min(boardWidth - playerWidth, playerState.x + playerVelocityX);
         startMove = true;
+        changeButtonColor(color3, "red", "right");
     }
     updatePlayerPosition();
 
@@ -125,6 +128,7 @@ function movePlayer(event) {
         status.innerText = "";
     }
 }
+
 
 function moveBall() {
     if (startMove === false) {
@@ -255,10 +259,17 @@ function checkCollisionWithBlocks() {
 
 
 function stopEsc(event2) {
-    if ( event2.key === "Escape" ) {
+    if (event2.key === "Escape") {
         startMove = false;
+        let color2 = document.getElementById("color2");
+        const originalColor = color2.style.backgroundColor;
+        color2.style.backgroundColor = "red";
+        setTimeout(() => {
+            color2.style.backgroundColor = originalColor;
+        }, 200);
     }
 }
+
 
 function continueGame() {
     startMove = true;
@@ -280,4 +291,33 @@ function calculateFPS(timestamp) {
     } else {
         lastTime = timestamp; // Initialise lastTime la première fois que la fonction est appelée
     }
+}
+
+//------------------------------------------------------------------------------------------------------------------------------//
+
+
+// style
+
+
+let isLeftButtonRed = false;
+let isRightButtonRed = false;
+
+
+function changeButtonColor(button, color, direction) {
+    if ((direction === "left" && isLeftButtonRed) || (direction === "right" && isRightButtonRed)) {
+        return; // Ne fait rien si le bouton est déjà rouge
+    }
+
+    const originalColor = button.style.backgroundColor;
+    button.style.backgroundColor = color;
+
+    if (direction === "left") isLeftButtonRed = true;
+    if (direction === "right") isRightButtonRed = true;
+
+    setTimeout(() => {
+        button.style.backgroundColor = originalColor;
+
+        if (direction === "left") isLeftButtonRed = false;
+        if (direction === "right") isRightButtonRed = false;
+    }, 200); // Change pendant 200ms
 }
